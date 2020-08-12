@@ -144,6 +144,8 @@ sealed class List<out E> {
 
     abstract fun divide(depth: Int): List<List<E>>
 
+    abstract fun forEach(ef: (E) -> Unit)
+
     fun cons(x: @UnsafeVariance E): List<E> = Cons(x, this)
 
     fun drop(n: Int): List<E> = Companion.drop(n, this)
@@ -293,6 +295,8 @@ sealed class List<out E> {
 
         override fun divide(depth: Int): List<List<E>> = Nil
 
+        override fun forEach(ef: (E) -> Unit) {}
+
         override fun toString(): String = "[NIL]"
     }
 
@@ -441,6 +445,8 @@ sealed class List<out E> {
 
             return divideIter(List(this), 0)
         }
+
+        override fun forEach(ef: (E) -> Unit) = foldLeft(Unit) { ef }
 
         override fun toString(): String = "[${toString("", this)}NIL]"
     }
