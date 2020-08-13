@@ -5,4 +5,8 @@ class IO(private val f: () -> Unit) {
         f()
         io.f()
     }
+    
+    companion object {
+        val empty: IO = IO {}
+    }
 }
