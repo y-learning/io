@@ -31,6 +31,8 @@ private fun readPeopleFromFile(filename: String): Result<List<Person>> =
 private fun readPeopleFromScript(vararg commands: String): List<Person> =
         Stream.unfold(ScriptReader(*commands), ::person).toList()
 
+fun getName() = "Mickey"
+
 fun main() {
 //    readPeopleFromConsole().forEach(::println)
 
@@ -43,4 +45,16 @@ fun main() {
 
     readPeopleFromScript("1", "Mickey", "Mouse",
                          "2", "Minnie", "Mouse").forEach(::println)
+
+    val instruction1 = IO { print("Hello, ") }
+    val instruction2 = IO { print(getName()) }
+    val instruction3 = IO { print("!\n") }
+
+    val instructions = List(instruction1, instruction2, instruction3)
+
+    val script1: IO = instructions.foldRight(IO.empty) { io -> { io + it } }
+
+    val script2: IO = instructions.foldLeft(IO.empty) { acc -> { acc + it } }
+
+    script2()
 }
