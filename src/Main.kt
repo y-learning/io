@@ -11,8 +11,8 @@ fun person(input: Input): Result<Pair<Person, Input>> =
                         fName.second.readString("Enter your last name:")
                                 .map { lName ->
                                     Pair(Person(id.first,
-                                            fName.first,
-                                            lName.first), lName.second)
+                                                fName.first,
+                                                lName.first), lName.second)
                                 }
                     }
         }
@@ -28,11 +28,19 @@ private fun readPeopleFromFile(filename: String): Result<List<Person>> =
             }
         }
 
+private fun readPeopleFromScript(vararg commands: String): List<Person> =
+        Stream.unfold(ScriptReader(*commands), ::person).toList()
+
 fun main() {
 //    readPeopleFromConsole().forEach(::println)
 
     readPeopleFromFile("ppl.txt")
             .forEach({ list ->
-                list.forEach(::println)
-            }, onFailure = ::println)
+                         list.forEach(::println)
+                     }, onFailure = ::println)
+
+    println("\n")
+
+    readPeopleFromScript("1", "Mickey", "Mouse",
+                         "2", "Minnie", "Mouse").forEach(::println)
 }
