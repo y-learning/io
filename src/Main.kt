@@ -18,9 +18,9 @@ fun person(input: Input): Result<Pair<Person, Input>> =
         }
 
 
+private fun readPeopleFromConsole(): List<Person> =
+        Stream.unfold(ConsoleReader(), ::person).toList()
+
 fun main() {
     readPeopleFromConsole().forEach(::println)
 }
-
-private fun readPeopleFromConsole(): List<Person> =
-        Stream.unfold(ConsoleReader(), ::person).toList()
