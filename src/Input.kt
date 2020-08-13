@@ -1,10 +1,6 @@
 import result.Result
-
 import java.io.BufferedReader
 import java.io.Closeable
-import java.io.InputStreamReader
-import java.lang.System.`in`
-
 
 interface Input : Closeable {
     fun readString(): Result<Pair<String, Input>>
@@ -38,21 +34,4 @@ abstract class Reader(private val reader: BufferedReader) : Input {
     }
 
     override fun close() = reader.close()
-}
-
-class ConsoleReader(reader: BufferedReader) : Reader(reader) {
-    override fun readString(message: String): Result<Pair<String, Input>> {
-        print("$message ")
-        return readString()
-    }
-
-    override fun readInt(message: String): Result<Pair<Int, Input>> {
-        print("$message ")
-        return readInt()
-    }
-
-    companion object {
-        operator fun invoke(): ConsoleReader =
-                ConsoleReader(BufferedReader(InputStreamReader(`in`)))
-    }
 }
