@@ -161,6 +161,15 @@ sealed class Stream<out E> {
 
         fun from(i: Int): Stream<Int> = unfold(i) { Result(Pair(it, it + 1)) }
 
+        fun <E> fill(n: Int, element: Lazy<E>): Stream<E> {
+            tailrec
+            fun fill(acc: Stream<E>, n: Int, elem: Lazy<E>): Stream<E> =
+                    when {
+                        n <= 0 -> acc
+                        else -> fill(Cons(elem, Lazy { acc }), n - 1, elem)
+                    }
+
+            return fill(Empty, n, element)
         }
     }
 }
