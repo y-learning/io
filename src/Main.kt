@@ -66,4 +66,6 @@ fun main() {
 
     val script3 = sayHello()
     script3()
+
+    val program = io.Input.repeat(5, sayHello())
 }
