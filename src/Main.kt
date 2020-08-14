@@ -67,5 +67,14 @@ fun main() {
     val script3 = sayHello()
     script3()
 
-    val program = io.Input.repeat(5, sayHello())
+    val program = io.Input.repeat(3, sayHello())
+
+    println("doWhile:")
+
+    io.Input.doWhile(Console.readln()) { result: Result<String> ->
+        io.Input {
+            result.getOrElse("") != ""
+        }
+    }()
+    println("bye!")
 }

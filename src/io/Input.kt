@@ -28,8 +28,21 @@ class Input<out A>(private val f: () -> A) {
                                 }
                             }
                         }
-    }
-}
 
-fun <A, B, C> map2(inputA: Input<A>, inputB: Input<B>, f: (A) -> (B) -> C):
-        Input<C> = inputA.flatMap { a -> inputB.map { b: B -> f(a)(b) } }
+        fun <A, B, C> map2(inputA: Input<A>,
+                           inputB: Input<B>,
+                           f: (A) -> (B) -> C): Input<C> =
+                inputA.flatMap { a -> inputB.map { b: B -> f(a)(b) } }
+
+        fun <A> doWhile(input: Input<A>, f: (A) -> Input<Boolean>):
+                Input<Unit> =
+                input.flatMap { f(it) }
+                        .flatMap { b: Boolean ->
+                            when {
+                                b -> doWhile(input, f)
+                                else -> empty
+                            }
+                        }
+    }
+
+}
