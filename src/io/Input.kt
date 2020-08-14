@@ -8,6 +8,8 @@ class Input<out A>(private val f: () -> A) {
 
     operator fun invoke() = f()
 
+    fun <B> map(g: (A) -> B): Input<B> = Input { g(f()) }
+
     companion object {
         val empty: Input<Unit> = Input {}
 

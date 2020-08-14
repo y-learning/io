@@ -1,3 +1,4 @@
+import io.Console
 import io.IO
 import list.List
 import result.Result
@@ -34,6 +35,11 @@ private fun readPeopleFromScript(vararg commands: String): List<Person> =
 
 fun getName() = "Mickey"
 
+fun sayHello(): io.Input<Unit> = Console.print("Enter your name:")
+        .map { Console.readln()() }
+        .map { result -> result.map { name -> "Hello, $name!" }.getOrElse("") }
+        .map { s -> Console.println(s)() }
+
 fun main() {
 //    readPeopleFromConsole().forEach(::println)
 
@@ -56,6 +62,8 @@ fun main() {
     val script1: IO = instructions.foldRight(IO.empty) { io -> { io + it } }
 
     val script2: IO = instructions.foldLeft(IO.empty) { acc -> { acc + it } }
-
     script2()
+
+    val script3 = sayHello()
+    script3()
 }
