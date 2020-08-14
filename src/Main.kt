@@ -77,4 +77,8 @@ fun main() {
         }
     }()
     println("bye!")
+
+//    val pg = io.Input.forever<String, String>(io.Input { "why?" })
+//            .flatMap { s: String -> Console.println(s) }
+
 }

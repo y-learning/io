@@ -43,6 +43,10 @@ class Input<out A>(private val f: () -> A) {
                                 else -> empty
                             }
                         }
-    }
 
+        fun <A, B> forever(ioa: Input<A>): Input<B> {
+            val t: () -> Input<B> = { forever(ioa) }
+            return ioa.flatMap { t() }
+        }
+    }
 }
